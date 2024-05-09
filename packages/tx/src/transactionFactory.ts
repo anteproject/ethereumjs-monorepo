@@ -5,12 +5,14 @@ import { AccessListEIP2930Transaction } from './eip2930Transaction.js'
 import { BlobEIP4844Transaction } from './eip4844Transaction.js'
 import { normalizeTxParams } from './fromRpc.js'
 import { LegacyTransaction } from './legacyTransaction.js'
+import { DepositL2Transaction } from './depositL2Transaction.js'
 import {
   TransactionType,
   isAccessListEIP2930TxData,
   isBlobEIP4844TxData,
   isFeeMarketEIP1559TxData,
   isLegacyTxData,
+  isDepositL2TxData,
 } from './types.js'
 
 import type { Transaction, TxData, TxOptions, TypedTxData } from './types.js'
@@ -42,6 +44,8 @@ export class TransactionFactory {
         return FeeMarketEIP1559Transaction.fromTxData(txData, txOptions) as Transaction[T]
       } else if (isBlobEIP4844TxData(txData)) {
         return BlobEIP4844Transaction.fromTxData(txData, txOptions) as Transaction[T]
+      } else if (isDepositL2TxData(txData)) {
+        return DepositL2Transaction.fromTxData(txData, txOptions) as Transaction[T]
       } else {
         throw new Error(`Tx instantiation with type ${(txData as TypedTxData)?.type} not supported`)
       }
