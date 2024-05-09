@@ -6,9 +6,9 @@ import {
   TransactionFactory,
   isAccessListEIP2930Tx,
   isBlobEIP4844Tx,
+  isDepositL2Tx,
   isFeeMarketEIP1559Tx,
   isLegacyTx,
-  isDepositL2Tx,
 } from '@ethereumjs/tx'
 import {
   BIGINT_0,
