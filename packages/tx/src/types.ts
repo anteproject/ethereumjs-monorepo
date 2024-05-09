@@ -1,5 +1,6 @@
 import { bytesToBigInt, toBytes } from '@ethereumjs/util'
 
+import { DepositL2Transaction } from './depositL2Transaction.js'
 import type { FeeMarketEIP1559Transaction } from './eip1559Transaction.js'
 import type { AccessListEIP2930Transaction } from './eip2930Transaction.js'
 import type { BlobEIP4844Transaction } from './eip4844Transaction.js'
@@ -12,7 +13,7 @@ import type {
   BytesLike,
   PrefixedHexString,
 } from '@ethereumjs/util'
-import { DepositL2Transaction } from './depositL2Transaction.js'
+
 export type {
   AccessList,
   AccessListBytes,

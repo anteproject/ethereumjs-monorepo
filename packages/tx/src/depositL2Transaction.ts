@@ -3,8 +3,6 @@ import {
   Address,
   BIGINT_0,
   BIGINT_27,
-  BigIntLike,
-  MAX_INTEGER,
   bigIntToHex,
   bigIntToUnpaddedBytes,
   bytesToBigInt,
@@ -31,7 +29,6 @@ import type {
   TxOptions,
 } from './types.js'
 import type { Common } from '@ethereumjs/common'
-import { access } from 'fs'
 
 type TxData = AllTypesTxData[TransactionType.DepositL2]
 type TxValuesArray = AllTypesTxValuesArray[TransactionType.DepositL2]
