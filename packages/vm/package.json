@@ -1,6 +1,6 @@
 {
   "name": "@ethereumjs/vm",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "An Ethereum VM implementation",
   "keywords": [
     "ethereum",
@@ -63,14 +63,14 @@
     "tsc": "../../config/cli/ts-compile.sh"
   },
   "dependencies": {
-    "@ethereumjs/block": "^5.2.0",
-    "@ethereumjs/blockchain": "^7.2.0",
+    "@ethereumjs/block": "^5.2.1",
+    "@ethereumjs/blockchain": "^7.2.1",
     "@ethereumjs/common": "^4.3.0",
     "@ethereumjs/evm": "^3.0.0",
     "@ethereumjs/rlp": "^5.0.2",
-    "@ethereumjs/statemanager": "^2.3.0",
+    "@ethereumjs/statemanager": "^2.3.1",
     "@ethereumjs/trie": "^6.2.0",
-    "@ethereumjs/tx": "^5.3.0",
+    "@ethereumjs/tx": "^5.4.0",
     "@ethereumjs/util": "^9.0.3",
     "debug": "^4.3.3",
     "ethereum-cryptography": "^2.1.3",

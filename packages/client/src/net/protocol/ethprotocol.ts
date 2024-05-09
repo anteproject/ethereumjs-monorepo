@@ -8,6 +8,7 @@ import {
   isBlobEIP4844Tx,
   isFeeMarketEIP1559Tx,
   isLegacyTx,
+  isDepositL2Tx,
 } from '@ethereumjs/tx'
 import {
   BIGINT_0,
@@ -259,6 +260,8 @@ export class EthProtocol extends Protocol {
             serializedTxs.push(tx.serialize())
           } else if (isLegacyTx(tx)) {
             serializedTxs.push(tx.raw())
+          } else if (isDepositL2Tx(tx)) {
+            serializedTxs.push(tx.serialize())
           } else {
             // Dual use for this typeguard:
             // 1. to enable typescript to throw build errors if any tx is missing above
