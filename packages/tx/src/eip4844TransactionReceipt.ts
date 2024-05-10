@@ -1,10 +1,9 @@
 import { TransactionBaseReceipt } from './baseReceipt.js'
-import {
-  bigIntToUnpaddedBytes,
-  EthersProvider,
-  fetchFromProvider,
-  getProvider,
-} from '@ethereumjs/util'
+
+import type { EthersProvider } from '@ethereumjs/util'
+
+import { bigIntToUnpaddedBytes, fetchFromProvider, getProvider } from '@ethereumjs/util'
+
 import { ReceiptValuesArray, TransactionType } from './types.js'
 
 export class BlobEIP4844TransactionReceipt extends TransactionBaseReceipt<TransactionType.BlobEIP4844> {

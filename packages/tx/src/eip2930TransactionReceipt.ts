@@ -28,7 +28,7 @@ export class AccessListEIP2930TransactionReceipt extends TransactionBaseReceipt<
     this.setData({
       txHash: this.txHash,
       type: response.type,
-      statusOrState: BigInt(response.status ? response.status : 0) > 0n,
+      statusOrState: BigInt(response.status !== undefined ? response.status : 0) > 0n,
       cumulativeGasUsed: BigInt(response.cumulativeGasUsed),
       logs: response.logs,
       logsBloom: response.logsBloom,
