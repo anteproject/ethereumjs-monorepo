@@ -18,6 +18,7 @@ import { checkMaxInitCodeSize } from './util.js'
 
 import type {
   JsonTx,
+  Receipt,
   Transaction,
   TransactionCache,
   TransactionInterface,
@@ -25,7 +26,9 @@ import type {
   TxOptions,
   TxValuesArray,
 } from './types.js'
-import type { BigIntLike } from '@ethereumjs/util'
+import type { BigIntLike, EthersProvider } from '@ethereumjs/util'
+import { TransactionBaseReceipt } from './baseReceipt'
+import { createEmptyReceipt } from './receiptFactory'
 
 /**
  * This base class will likely be subject to further
@@ -76,6 +79,8 @@ export abstract class BaseTransaction<T extends TransactionType>
    */
   protected DEFAULT_CHAIN = Chain.Mainnet
 
+  receipt: Receipt[T]
+
   constructor(txData: TxData[T], opts: TxOptions) {
     const { nonce, gasLimit, to, value, data, v, r, s, type } = txData
     this._type = Number(bytesToBigInt(toBytes(type)))
@@ -111,6 +116,7 @@ export abstract class BaseTransaction<T extends TransactionType>
     if (createContract && common.isActivatedEIP(3860) && allowUnlimitedInitCodeSize === false) {
       checkMaxInitCodeSize(common, this.data.length)
     }
+    this.receipt = createEmptyReceipt(this.type, '')
   }
 
   /**
@@ -529,5 +535,11 @@ export abstract class BaseTransaction<T extends TransactionType>
     postfix += `signed=${isSigned} hf=${hf}`
 
     return postfix
+  }
+  async loadReceipt(provider: string | EthersProvider): Promise<void> {
+    if (!this.receipt.hasData()) {
+      this.receipt.setTxHash(bytesToHex(this.hash()))
+      await this.receipt.loadData(provider)
+    }
   }
 }

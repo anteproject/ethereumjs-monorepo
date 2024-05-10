@@ -13,6 +13,11 @@ import type {
   BytesLike,
   PrefixedHexString,
 } from '@ethereumjs/util'
+import { LegacyTransactionReceipt } from './legacyTransactionReceipt.js'
+import { FeeMarketEIP1559TransactionReceipt } from './eip1559TransactionReceipt.js'
+import { AccessListEIP2930TransactionReceipt } from './eip2930TransactionReceipt.js'
+import { BlobEIP4844TransactionReceipt } from './eip4844TransactionReceipt.js'
+import { DepositL2TransactionReceipt } from './depositL2TransactionReceipt.js'
 
 export type {
   AccessList,
@@ -130,6 +135,14 @@ export interface Transaction {
 }
 
 export type TypedTransaction = Transaction[TransactionType]
+
+export interface Receipt {
+  [TransactionType.Legacy]: LegacyTransactionReceipt
+  [TransactionType.FeeMarketEIP1559]: FeeMarketEIP1559TransactionReceipt
+  [TransactionType.AccessListEIP2930]: AccessListEIP2930TransactionReceipt
+  [TransactionType.BlobEIP4844]: BlobEIP4844TransactionReceipt
+  [TransactionType.DepositL2]: DepositL2TransactionReceipt
+}
 
 export function isLegacyTx(tx: TypedTransaction): tx is LegacyTransaction {
   return tx.type === TransactionType.Legacy
@@ -387,6 +400,46 @@ export interface DepositL2TxData extends FeeMarketEIP1559TxData {
   isSystemTx?: BigIntLike
 }
 
+export interface Log {
+  address: Address
+  topics: BytesLike[]
+  data: BytesLike
+}
+
+export interface ReceiptData {
+  txHash: string
+  type: BigIntLike
+  statusOrState: boolean
+  cumulativeGasUsed: BigIntLike
+  logs: Log[]
+  logsBloom: BytesLike
+  depositNonce?: BigIntLike
+}
+
+export type LegacyTransactionReceiptValuesArray = [Uint8Array, Uint8Array, Uint8Array, LogsBytes]
+
+export type TypedTransactionReceiptValuesArray = [Uint8Array, Uint8Array, Uint8Array, LogsBytes]
+
+export type ReceiptLogBytesItem = [Uint8Array, Uint8Array[], Uint8Array]
+export type LogsBytes = ReceiptLogBytesItem[]
+
+export type DepositL2TransactionReceiptValuesArray = [
+  Uint8Array,
+  Uint8Array,
+  Uint8Array,
+  LogsBytes,
+  Uint8Array,
+  Uint8Array
+]
+
+export interface ReceiptValuesArray {
+  [TransactionType.Legacy]: LegacyTransactionReceiptValuesArray
+  [TransactionType.AccessListEIP2930]: TypedTransactionReceiptValuesArray
+  [TransactionType.FeeMarketEIP1559]: TypedTransactionReceiptValuesArray
+  [TransactionType.BlobEIP4844]: TypedTransactionReceiptValuesArray
+  [TransactionType.DepositL2]: DepositL2TransactionReceiptValuesArray
+}
+
 export interface TxValuesArray {
   [TransactionType.Legacy]: LegacyTxValuesArray
   [TransactionType.AccessListEIP2930]: AccessListEIP2930TxValuesArray
@@ -504,6 +557,11 @@ export interface JsonTx {
   maxFeePerGas?: PrefixedHexString
   maxFeePerBlobGas?: PrefixedHexString
   blobVersionedHashes?: PrefixedHexString[]
+  sourceHash?: PrefixedHexString
+  mint?: PrefixedHexString
+  depositReceiptVersion?: PrefixedHexString
+  isSystemTx?: PrefixedHexString
+  from?: PrefixedHexString
 }
 
 export type JsonBlobTxNetworkWrapper = JsonTx & {

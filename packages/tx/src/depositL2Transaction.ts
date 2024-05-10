@@ -124,7 +124,6 @@ export class DepositL2Transaction extends BaseTransaction<TransactionType.Deposi
    */
   public constructor(txData: TxData, opts: TxOptions = {}) {
     super({ ...txData, type: TransactionType.DepositL2 }, opts)
-
     this.common = this._getCommon(opts.common)
 
     this.chainId = this.common.chainId()
@@ -319,10 +318,12 @@ signatureYParity, signatureR, signatureS]`
 
     return {
       ...baseJson,
-      chainId: bigIntToHex(this.chainId),
-      maxPriorityFeePerGas: bigIntToHex(this.maxPriorityFeePerGas),
-      maxFeePerGas: bigIntToHex(this.maxFeePerGas),
+      sourceHash: bytesToHex(this.sourceHash),
+      from: bytesToHex(this.from ? this.from.bytes : new Uint8Array(20)),
+      isSystemTx: bigIntToHex(this.isSystemTx),
+      mint: bigIntToHex(this.mint),
       accessList: accessListJSON,
+      maxFeePerGas: bigIntToHex(this.maxFeePerGas),
     }
   }
 

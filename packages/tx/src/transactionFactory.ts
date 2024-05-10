@@ -15,7 +15,7 @@ import {
   isLegacyTxData,
 } from './types.js'
 
-import type { Transaction, TxData, TxOptions, TypedTxData } from './types.js'
+import type { DepositL2TxData, Transaction, TxData, TxOptions, TypedTxData } from './types.js'
 import type { EthersProvider } from '@ethereumjs/util'
 
 export class TransactionFactory {
@@ -71,6 +71,8 @@ export class TransactionFactory {
           return FeeMarketEIP1559Transaction.fromSerializedTx(data, txOptions) as Transaction[T]
         case TransactionType.BlobEIP4844:
           return BlobEIP4844Transaction.fromSerializedTx(data, txOptions) as Transaction[T]
+        case TransactionType.DepositL2:
+          return DepositL2Transaction.fromSerializedTx(data, txOptions) as Transaction[T]
         default:
           throw new Error(`TypedTransaction with ID ${data[0]} unknown`)
       }
@@ -119,6 +121,7 @@ export class TransactionFactory {
     if (txData === null) {
       throw new Error('No data returned from provider')
     }
+
     return TransactionFactory.fromRPC(txData, txOptions)
   }
 

@@ -1,7 +1,12 @@
 import { ConsensusType } from '@ethereumjs/common'
 import { RLP } from '@ethereumjs/rlp'
 import { Trie } from '@ethereumjs/trie'
-import { BlobEIP4844Transaction, Capability, TransactionFactory } from '@ethereumjs/tx'
+import {
+  BlobEIP4844Transaction,
+  Capability,
+  TransactionFactory,
+  TransactionType,
+} from '@ethereumjs/tx'
 import {
   BIGINT_0,
   CLRequestFactory,
@@ -660,6 +665,27 @@ export class Block {
    */
   async genTxTrie(): Promise<Uint8Array> {
     return Block.genTransactionsTrieRoot(this.transactions, new Trie({ common: this.common }))
+  }
+
+  async genReceiptsTrie(provider: string | EthersProvider): Promise<Trie> {
+    const trie = new Trie()
+    for (let i = 0; i < this.transactions.length; i++) {
+      await this.transactions[i].loadReceipt(provider)
+    }
+    for (let i = 0; i < this.transactions.length; i++) {
+      const serialized = this.transactions[i].receipt.serialize()
+      await trie.put(RLP.encode(i), serialized)
+    }
+    const root = trie.root()
+
+    if (!equalsBytes(root, this.header.receiptTrie)) {
+      throw new Error(
+        `Receipts trie root mismatch. Expected ${bytesToHex(
+          this.header.receiptTrie
+        )}, got ${bytesToHex(root)}`
+      )
+    }
+    return trie
   }
 
   /**
