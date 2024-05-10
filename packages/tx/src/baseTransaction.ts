@@ -12,6 +12,7 @@ import {
   toBytes,
   unpadBytes,
 } from '@ethereumjs/util'
+import type { BigIntLike, EthersProvider } from '@ethereumjs/util'
 
 import { Capability, TransactionType } from './types.js'
 import { checkMaxInitCodeSize } from './util.js'
@@ -26,9 +27,8 @@ import type {
   TxOptions,
   TxValuesArray,
 } from './types.js'
-import type { BigIntLike, EthersProvider } from '@ethereumjs/util'
-import { TransactionBaseReceipt } from './baseReceipt'
-import { createEmptyReceipt } from './receiptFactory'
+
+import { createEmptyReceipt } from './receiptFactory.js'
 
 /**
  * This base class will likely be subject to further

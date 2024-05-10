@@ -1,11 +1,10 @@
-import { getEmptyReceiptData, TransactionBaseReceipt } from './baseReceipt'
-import { BaseTransaction } from './baseTransaction.js'
-import { DepositL2TransactionReceipt } from './depositL2TransactionReceipt'
-import { FeeMarketEIP1559TransactionReceipt } from './eip1559TransactionReceipt'
-import { AccessListEIP2930TransactionReceipt } from './eip2930TransactionReceipt'
-import { BlobEIP4844TransactionReceipt } from './eip4844TransactionReceipt'
-import { LegacyTransactionReceipt } from './legacyTransactionReceipt'
-import { Receipt, TransactionType } from './types'
+import { getEmptyReceiptData } from './baseReceipt.js'
+import { DepositL2TransactionReceipt } from './depositL2TransactionReceipt.js'
+import { FeeMarketEIP1559TransactionReceipt } from './eip1559TransactionReceipt.js'
+import { AccessListEIP2930TransactionReceipt } from './eip2930TransactionReceipt.js'
+import { BlobEIP4844TransactionReceipt } from './eip4844TransactionReceipt.js'
+import { LegacyTransactionReceipt } from './legacyTransactionReceipt.js'
+import { Receipt, TransactionType } from './types.js'
 
 export function createEmptyReceipt<T extends TransactionType>(
   type: TransactionType,

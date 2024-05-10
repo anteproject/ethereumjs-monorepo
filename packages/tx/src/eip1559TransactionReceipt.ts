@@ -1,20 +1,11 @@
 import {
-  bigIntToBytes,
   bigIntToUnpaddedBytes,
-  concatBytes,
   EthersProvider,
   fetchFromProvider,
   getProvider,
-  toBytes,
 } from '@ethereumjs/util'
 import { TransactionBaseReceipt } from './baseReceipt'
-import {
-  LegacyTransactionReceiptValuesArray,
-  Log,
-  ReceiptValuesArray,
-  TransactionType,
-  TypedTransactionReceiptValuesArray,
-} from './types'
+import { ReceiptValuesArray, TransactionType } from './types'
 
 export class FeeMarketEIP1559TransactionReceipt extends TransactionBaseReceipt<TransactionType.FeeMarketEIP1559> {
   async loadData(provider: string | EthersProvider): Promise<void> {
@@ -38,7 +29,7 @@ export class FeeMarketEIP1559TransactionReceipt extends TransactionBaseReceipt<T
     this.setData({
       txHash: this.txHash,
       type: response.type,
-      statusOrState: BigInt(response.status ? response.status : 0) > 0n,
+      statusOrState: BigInt(response.status !== undefined ? response.status : 0) > 0n,
       cumulativeGasUsed: BigInt(response.cumulativeGasUsed),
       logs: response.logs,
       logsBloom: response.logsBloom,

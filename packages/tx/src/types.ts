@@ -1,10 +1,4 @@
 import { bytesToBigInt, toBytes } from '@ethereumjs/util'
-
-import type { DepositL2Transaction } from './depositL2Transaction.js'
-import type { FeeMarketEIP1559Transaction } from './eip1559Transaction.js'
-import type { AccessListEIP2930Transaction } from './eip2930Transaction.js'
-import type { BlobEIP4844Transaction } from './eip4844Transaction.js'
-import type { LegacyTransaction } from './legacyTransaction.js'
 import type { AccessList, AccessListBytes, Common, Hardfork } from '@ethereumjs/common'
 import type {
   Address,
@@ -13,11 +7,6 @@ import type {
   BytesLike,
   PrefixedHexString,
 } from '@ethereumjs/util'
-import { LegacyTransactionReceipt } from './legacyTransactionReceipt.js'
-import { FeeMarketEIP1559TransactionReceipt } from './eip1559TransactionReceipt.js'
-import { AccessListEIP2930TransactionReceipt } from './eip2930TransactionReceipt.js'
-import { BlobEIP4844TransactionReceipt } from './eip4844TransactionReceipt.js'
-import { DepositL2TransactionReceipt } from './depositL2TransactionReceipt.js'
 
 export type {
   AccessList,
@@ -25,6 +14,17 @@ export type {
   AccessListBytesItem,
   AccessListItem,
 } from '@ethereumjs/common'
+
+import type { DepositL2Transaction } from './depositL2Transaction.js'
+import type { DepositL2TransactionReceipt } from './depositL2TransactionReceipt.js'
+import type { FeeMarketEIP1559Transaction } from './eip1559Transaction.js'
+import type { FeeMarketEIP1559TransactionReceipt } from './eip1559TransactionReceipt.js'
+import type { AccessListEIP2930Transaction } from './eip2930Transaction.js'
+import type { AccessListEIP2930TransactionReceipt } from './eip2930TransactionReceipt.js'
+import type { BlobEIP4844Transaction } from './eip4844Transaction.js'
+import type { BlobEIP4844TransactionReceipt } from './eip4844TransactionReceipt.js'
+import type { LegacyTransaction } from './legacyTransaction.js'
+import type { LegacyTransactionReceipt } from './legacyTransactionReceipt.js'
 
 /**
  * Can be used in conjunction with {@link Transaction[TransactionType].supports}

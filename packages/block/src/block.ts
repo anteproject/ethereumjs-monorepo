@@ -1,12 +1,7 @@
 import { ConsensusType } from '@ethereumjs/common'
 import { RLP } from '@ethereumjs/rlp'
 import { Trie } from '@ethereumjs/trie'
-import {
-  BlobEIP4844Transaction,
-  Capability,
-  TransactionFactory,
-  TransactionType,
-} from '@ethereumjs/tx'
+import { BlobEIP4844Transaction, Capability, TransactionFactory } from '@ethereumjs/tx'
 import {
   BIGINT_0,
   CLRequestFactory,

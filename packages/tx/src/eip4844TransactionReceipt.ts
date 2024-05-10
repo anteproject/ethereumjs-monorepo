@@ -1,20 +1,11 @@
+import { TransactionBaseReceipt } from './baseReceipt.js'
 import {
-  bigIntToBytes,
   bigIntToUnpaddedBytes,
-  concatBytes,
   EthersProvider,
   fetchFromProvider,
   getProvider,
-  toBytes,
 } from '@ethereumjs/util'
-import { TransactionBaseReceipt } from './baseReceipt'
-import {
-  LegacyTransactionReceiptValuesArray,
-  Log,
-  ReceiptValuesArray,
-  TransactionType,
-  TypedTransactionReceiptValuesArray,
-} from './types'
+import { ReceiptValuesArray, TransactionType } from './types.js'
 
 export class BlobEIP4844TransactionReceipt extends TransactionBaseReceipt<TransactionType.BlobEIP4844> {
   async loadData(provider: string | EthersProvider): Promise<void> {

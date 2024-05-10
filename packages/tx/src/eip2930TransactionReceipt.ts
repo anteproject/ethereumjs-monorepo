@@ -1,20 +1,11 @@
+import { TransactionBaseReceipt } from './baseReceipt.js'
 import {
-  bigIntToBytes,
   bigIntToUnpaddedBytes,
-  concatBytes,
   EthersProvider,
   fetchFromProvider,
   getProvider,
-  toBytes,
 } from '@ethereumjs/util'
-import { TransactionBaseReceipt } from './baseReceipt'
-import {
-  LegacyTransactionReceiptValuesArray,
-  Log,
-  ReceiptValuesArray,
-  TransactionType,
-  TypedTransactionReceiptValuesArray,
-} from './types'
+import { ReceiptValuesArray, TransactionType } from './types'
 
 export class AccessListEIP2930TransactionReceipt extends TransactionBaseReceipt<TransactionType.AccessListEIP2930> {
   async loadData(provider: string | EthersProvider): Promise<void> {

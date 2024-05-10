@@ -1,19 +1,11 @@
-import {
-  bigIntToUnpaddedBytes,
-  bytesToBigInt,
-  concatBytes,
-  EthersProvider,
-  fetchFromProvider,
-  getProvider,
-  toBytes,
-} from '@ethereumjs/util'
+import { bytesToBigInt, concatBytes, EthersProvider, toBytes } from '@ethereumjs/util'
 import { TransactionType, ReceiptData, ReceiptValuesArray, Log, LogsBytes } from './types'
 import { RLP } from '@ethereumjs/rlp'
 import { txTypeBytes } from './util'
 
 export function getEmptyReceiptData(txHash?: string): ReceiptData {
   return {
-    txHash: txHash || '',
+    txHash: txHash === undefined ? '' : txHash,
     type: new Uint8Array(0),
     statusOrState: false,
     cumulativeGasUsed: new Uint8Array(0),
@@ -37,9 +29,10 @@ export abstract class TransactionBaseReceipt<T extends TransactionType = Transac
     this.cumulativeGasUsed = bytesToBigInt(toBytes(receiptData.cumulativeGasUsed))
     this.logs = receiptData.logs
     this.logsBloom = toBytes(receiptData.logsBloom)
-    this.depositNonce = receiptData.depositNonce
-      ? bytesToBigInt(toBytes(receiptData.depositNonce))
-      : undefined
+    this.depositNonce =
+      receiptData.depositNonce !== undefined
+        ? bytesToBigInt(toBytes(receiptData.depositNonce))
+        : undefined
   }
 
   hasData(): boolean {
@@ -71,9 +64,10 @@ export abstract class TransactionBaseReceipt<T extends TransactionType = Transac
     this.cumulativeGasUsed = bytesToBigInt(toBytes(receiptData.cumulativeGasUsed))
     this.logs = receiptData.logs
     this.logsBloom = toBytes(receiptData.logsBloom)
-    this.depositNonce = receiptData.depositNonce
-      ? bytesToBigInt(toBytes(receiptData.depositNonce))
-      : undefined
+    this.depositNonce =
+      receiptData.depositNonce !== undefined
+        ? bytesToBigInt(toBytes(receiptData.depositNonce))
+        : undefined
   }
 
   abstract raw(): ReceiptValuesArray[T]

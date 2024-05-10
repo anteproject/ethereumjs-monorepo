@@ -5,8 +5,8 @@ import {
   getProvider,
   toBytes,
 } from '@ethereumjs/util'
-import { TransactionBaseReceipt } from './baseReceipt'
-import { ReceiptValuesArray, TransactionType } from './types'
+import { TransactionBaseReceipt } from './baseReceipt.js'
+import { ReceiptValuesArray, TransactionType } from './types.js'
 
 export class DepositL2TransactionReceipt extends TransactionBaseReceipt<TransactionType.DepositL2> {
   async loadData(provider: string | EthersProvider): Promise<void> {
@@ -30,11 +30,11 @@ export class DepositL2TransactionReceipt extends TransactionBaseReceipt<Transact
     this.setData({
       txHash: this.txHash,
       type: response.type,
-      statusOrState: BigInt(response.status ? response.status : 0) > 0n,
+      statusOrState: BigInt(response.status !== undefined ? response.status : 0) > 0n,
       cumulativeGasUsed: BigInt(response.cumulativeGasUsed),
       logs: response.logs,
       logsBloom: response.logsBloom,
-      depositNonce: response.depositNonce ? BigInt(response.depositNonce) : undefined,
+      depositNonce: response.depositNonce !== undefined ? BigInt(response.depositNonce) : undefined,
     })
   }
   raw(): ReceiptValuesArray[TransactionType.DepositL2] {
@@ -43,8 +43,12 @@ export class DepositL2TransactionReceipt extends TransactionBaseReceipt<Transact
       bigIntToUnpaddedBytes(this.cumulativeGasUsed),
       this.logsBloom,
       this.rawLogs(),
-      toBytes(this.depositNonce && this.depositNonce > 0n ? this.depositNonce : new Uint8Array()),
-      toBytes(this.depositNonce ? 1 : 0),
+      toBytes(
+        this.depositNonce !== undefined && this.depositNonce > 0n
+          ? this.depositNonce
+          : new Uint8Array()
+      ),
+      toBytes(this.depositNonce !== undefined ? 1 : 0),
     ]
   }
 }
