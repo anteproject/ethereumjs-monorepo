@@ -656,10 +656,18 @@ export class Block {
   }
 
   /**
-   * Generates transaction trie for validation.
+   * Generates transaction trie root for validation.
    */
   async genTxTrie(): Promise<Uint8Array> {
     return Block.genTransactionsTrieRoot(this.transactions, new Trie({ common: this.common }))
+  }
+
+  async genTransactionTrie(): Promise<Trie> {
+    const trie = new Trie()
+    for (let i = 0; i < this.transactions.length; i++) {
+      await trie.put(RLP.encode(i), this.transactions[i].serialize())
+    }
+    return trie
   }
 
   async genReceiptsTrie(provider: string | EthersProvider): Promise<Trie> {
